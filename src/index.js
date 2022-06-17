@@ -1,8 +1,14 @@
 import './styles.css';
 import Items from './newItems.js';
+import pageLoad from './pageLoad.js';
+
+var myItems = [];
 
 var content = document.createElement('div');
+content.setAttribute('id', 'content');
 document.body.appendChild(content);
+
+pageLoad();
 
 /*
   Project Outline:
