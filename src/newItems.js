@@ -1,4 +1,5 @@
-export default function Items(title, description, dueDate, priority, notes) {
+function Items(project, title, description, dueDate, priority, notes) {
+  this.project = project;
   this.title = title;
   this.description = description;
   this.dueDate = dueDate;
@@ -6,13 +7,16 @@ export default function Items(title, description, dueDate, priority, notes) {
   this.notes = notes;
 };
 
-export default function addItemToList() {
+function addItemToList() {
+  var project = document.getElementById('projectInput').value;
   var title = document.getElementById('titleInput').value;
   var description = document.getElementById('descInput').value;
   var dueDate = document.getElementById('dueInput').value;
   var priority = document.getElementById('priorityInput').value;
   var notes = document.getElementById('notesInput').value;
 
-  var item = new Items(title, description, dueDate, priority, notes);
+  var item = new Items(project, title, description, dueDate, priority, notes);
   myItems.push(item);
 }
+
+export {Items, addItemToList};
