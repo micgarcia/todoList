@@ -12,13 +12,11 @@ document.body.appendChild(content);
 pageLoad();
 
 /*
-  Project Outline:
-  -Create new .js file that contains constructor function that
-    creates todo items with different properties
-  -Setup html structure of todo app
-    -Should include sidebars for different projects and their
-     todo items, etc
-  -Create separate module(s) that append new todo items to DOM
-  -Create separate module(s) to edit todos, mark them complete, etc
-
+  Next steps:
+  -Finish system for adding new projects
+  -Implement system for knowing which project is currently selected,
+    and have item form autofill project name based on selected
+  -Write function that posts items based on which project is selected
+  -Implement ways to delete or edit item properties
+  -Only allow one form at a time
 */
