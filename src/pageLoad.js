@@ -1,6 +1,8 @@
+import {myItems} from './newItems.js';
 import {Items} from './newItems.js';
 import {createItem} from './newItems.js';
 
+// Function loads html structure and containers for project, items, and details
 export function pageLoad() {
   const content = document.getElementById('content');
 
@@ -65,6 +67,12 @@ export function pageLoad() {
   content.appendChild(app);
 };
 
+
+
+
+
+
+//Function creates Add Project button
 function addProject() {
   var projInput = document.createElement('input');
   projInput.setAttribute('type','text');
@@ -77,6 +85,10 @@ function addProject() {
 
 };
 
+
+
+// Function creates Add Item button, then creates form to enter item
+// then calls createItem when submit button clicked
 function addItem() {
   var itemContainer = document.getElementById('itemContainer');
   var itemButton = document.getElementById('itemButton');
@@ -162,5 +174,57 @@ function addItem() {
   submitForm.onclick = createItem;
 
 
+}
+
+
+
+// Function removes itemForm after submit button clicked
+export function hideItemForm() {
+  document.getElementById('itemForm').remove();
+}
+
+
+// Function that clears current items and posts all items
+export function postItems() {
+  var postedItems = document.querySelectorAll('.itemBox');
+  postedItems.forEach(item => {
+    item.remove();
+  });
+
+  for (var i = 0; i < myItems.length; i++) {
+    var itemBox = document.createElement('div');
+    itemBox.setAttribute('class', 'itemBox');
+    detContainer.appendChild(itemBox);
+
+    var detProject = document.createElement('div');
+    detProject.setAttribute('class', 'detProject');
+    detProject.innerHTML = 'Project: ' + myItems[i].project;
+    itemBox.appendChild(detProject);
+
+    var detTitle = document.createElement('div');
+    detTitle.setAttribute('class', 'detTitle');
+    detTitle.innerHTML = 'Title: ' + myItems[i].title;
+    itemBox.appendChild(detTitle);
+
+    var detDesc = document.createElement('div');
+    detDesc.setAttribute('class', 'detDesc');
+    detDesc.innerHTML = 'Description: ' + myItems[i].description;
+    itemBox.appendChild(detDesc);
+
+    var detDue = document.createElement('div');
+    detDue.setAttribute('class', 'detDue');
+    detDue.innerHTML = 'Due Date: ' + myItems[i].dueDate;
+    itemBox.appendChild(detDue);
+
+    var detPriority = document.createElement('div');
+    detPriority.setAttribute('class', 'detPriority');
+    detPriority.innerHTML = 'Priority: ' + myItems[i].priority;
+    itemBox.appendChild(detPriority);
+
+    var detNotes = document.createElement('div');
+    detNotes.setAttribute('class', 'detNotes');
+    detNotes.innerHTML = 'Notes: ' + myItems[i].priority;
+    itemBox.appendChild(detNotes);
+  }
 }
 

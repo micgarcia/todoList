@@ -1,4 +1,6 @@
 export var myItems = [];
+import {hideItemForm} from './pageLoad.js';
+import {postItems} from './pageLoad.js';
 
 export function Items(project, title, description, dueDate, priority, notes) {
   this.project = project;
@@ -19,6 +21,8 @@ export function createItem() {
 
   var item = new Items(project, title, description, dueDate, priority, notes);
   myItems.push(item);
-  console.log(myItems);
+  hideItemForm();
+  postItems();
+
 }
 
