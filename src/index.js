@@ -1,8 +1,9 @@
-import './styles.css';
-import Items from './newItems.js';
-import pageLoad from './pageLoad.js';
+import {myItems} from './newItems.js';
 
-var myItems = [];
+import './styles.css';
+import {Items} from './newItems.js';
+import {pageLoad} from './pageLoad.js';
+
 
 var content = document.createElement('div');
 content.setAttribute('id', 'content');
