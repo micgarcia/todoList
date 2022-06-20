@@ -13,10 +13,8 @@ pageLoad();
 
 /*
   Next steps:
-  -Finish system for adding new projects
-  -Implement system for knowing which project is currently selected,
-    and have item form autofill project name based on selected
-  -Write function that posts items based on which project is selected
+  -Implement localStorage
   -Implement ways to delete or edit item properties
-  -Only allow one form at a time
+  -Add date api to date input
+  -Style layout of page
 */

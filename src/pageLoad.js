@@ -1,4 +1,5 @@
 import {myItems} from './newItems.js';
+export var currentProject = 'Default';
 import {Items} from './newItems.js';
 import {createItem} from './newItems.js';
 
@@ -26,11 +27,24 @@ export function pageLoad() {
   var projDefault = document.createElement('div');
   projDefault.innerHTML = 'Default';
   projDefault.setAttribute('id', 'projDefault');
+  projDefault.setAttribute('class', 'projects');
+  projDefault.style.fontWeight = 'bold';
   projContainer.appendChild(projDefault);
+
+  projDefault.onclick = function() {
+    currentProject = this.innerHTML;
+    postItems();
+    var projects = document.querySelectorAll('.projects');
+    projects.forEach(item => {
+      item.style.fontWeight = 'normal';
+    });
+    projDefault.style.fontWeight = 'bold';
+  }
+
 
   var projButton = document.createElement('button');
   projButton.setAttribute('id','projButton');
-  projButton.innerHTML = 'Add Project';
+  projButton.innerHTML = 'New Project';
   projContainer.appendChild(projButton);
   projButton.onclick = addProject;
 
@@ -69,27 +83,65 @@ export function pageLoad() {
 
 
 
-
-
-
-//Function creates Add Project button
+//Function creates Add Project input and adds new project to DOM
 function addProject() {
+  hideProjForm();
+
+  var projForm = document.createElement('form');
+  projForm.setAttribute('id','projForm');
+
+
   var projInput = document.createElement('input');
   projInput.setAttribute('type','text');
   projInput.setAttribute('id','projInput');
   projInput.setAttribute('placeholder','Enter Project Name');
 
+  var submitProj = document.createElement('button');
+  submitProj.setAttribute('type', 'button');
+  submitProj.setAttribute('id', 'submitProj');
+  submitProj.innerHTML = 'Add New Project';
+
   var projContainer = document.getElementById('projContainer');
   var projButton = document.getElementById('projButton');
-  projContainer.insertBefore(projInput, projButton);
+
+  projForm.append(projInput, submitProj);
+  projContainer.insertBefore(projForm, projButton);
+
+
+  submitProj.onclick = function() {
+    var newProjectInput = document.getElementById('projInput').value;
+    var newProj = document.createElement('div');
+    newProj.setAttribute('class', 'projects');
+    newProj.innerHTML = newProjectInput;
+    projContainer.insertBefore(newProj, projButton);
+
+    newProj.onclick = function() {
+      currentProject = this.innerHTML;
+      postItems();
+
+      var projects = document.querySelectorAll('.projects');
+      projects.forEach(item => {
+        item.style.fontWeight = 'normal';
+      });
+
+      newProj.style.fontWeight = 'bold';
+
+    }
+
+
+    hideProjForm();
+  };
 
 };
+
 
 
 
 // Function creates Add Item button, then creates form to enter item
 // then calls createItem when submit button clicked
 function addItem() {
+  hideItemForm();
+
   var itemContainer = document.getElementById('itemContainer');
   var itemButton = document.getElementById('itemButton');
 
@@ -107,6 +159,7 @@ function addItem() {
   projectInput.setAttribute('type','text');
   projectInput.setAttribute('name', 'project');
   projectInput.setAttribute('id', 'projectInput');
+  projectInput.value = currentProject;
   itemForm.appendChild(projectInput);
 
   var titleLabel = document.createElement('label');
@@ -180,51 +233,64 @@ function addItem() {
 
 // Function removes itemForm after submit button clicked
 export function hideItemForm() {
-  document.getElementById('itemForm').remove();
+  var itemForm = document.getElementById('itemForm');
+  if (itemForm) {
+    itemForm.remove();
+  }
+}
+
+export function hideProjForm() {
+  var projForm = document.getElementById('projForm');
+  if (projForm) {
+    projForm.remove();
+  }
 }
 
 
 // Function that clears current items and posts all items
 export function postItems() {
+  console.log(myItems);
   var postedItems = document.querySelectorAll('.itemBox');
   postedItems.forEach(item => {
     item.remove();
   });
 
   for (var i = 0; i < myItems.length; i++) {
-    var itemBox = document.createElement('div');
-    itemBox.setAttribute('class', 'itemBox');
-    detContainer.appendChild(itemBox);
+    if (myItems[i].project === currentProject) {
+      var itemBox = document.createElement('div');
+      itemBox.setAttribute('class', 'itemBox');
+      detContainer.appendChild(itemBox);
 
-    var detProject = document.createElement('div');
-    detProject.setAttribute('class', 'detProject');
-    detProject.innerHTML = 'Project: ' + myItems[i].project;
-    itemBox.appendChild(detProject);
+      var detProject = document.createElement('div');
+      detProject.setAttribute('class', 'detProject');
+      detProject.innerHTML = 'Project: ' + myItems[i].project;
+      itemBox.appendChild(detProject);
 
-    var detTitle = document.createElement('div');
-    detTitle.setAttribute('class', 'detTitle');
-    detTitle.innerHTML = 'Title: ' + myItems[i].title;
-    itemBox.appendChild(detTitle);
+      var detTitle = document.createElement('div');
+      detTitle.setAttribute('class', 'detTitle');
+      detTitle.innerHTML = 'Title: ' + myItems[i].title;
+      itemBox.appendChild(detTitle);
 
-    var detDesc = document.createElement('div');
-    detDesc.setAttribute('class', 'detDesc');
-    detDesc.innerHTML = 'Description: ' + myItems[i].description;
-    itemBox.appendChild(detDesc);
+      var detDesc = document.createElement('div');
+      detDesc.setAttribute('class', 'detDesc');
+      detDesc.innerHTML = 'Description: ' + myItems[i].description;
+      itemBox.appendChild(detDesc);
 
-    var detDue = document.createElement('div');
-    detDue.setAttribute('class', 'detDue');
-    detDue.innerHTML = 'Due Date: ' + myItems[i].dueDate;
-    itemBox.appendChild(detDue);
+      var detDue = document.createElement('div');
+      detDue.setAttribute('class', 'detDue');
+      detDue.innerHTML = 'Due Date: ' + myItems[i].dueDate;
+      itemBox.appendChild(detDue);
 
-    var detPriority = document.createElement('div');
-    detPriority.setAttribute('class', 'detPriority');
-    detPriority.innerHTML = 'Priority: ' + myItems[i].priority;
-    itemBox.appendChild(detPriority);
+      var detPriority = document.createElement('div');
+      detPriority.setAttribute('class', 'detPriority');
+      detPriority.innerHTML = 'Priority: ' + myItems[i].priority;
+      itemBox.appendChild(detPriority);
 
-    var detNotes = document.createElement('div');
-    detNotes.setAttribute('class', 'detNotes');
-    detNotes.innerHTML = 'Notes: ' + myItems[i].priority;
-    itemBox.appendChild(detNotes);
+      var detNotes = document.createElement('div');
+      detNotes.setAttribute('class', 'detNotes');
+      detNotes.innerHTML = 'Notes: ' + myItems[i].priority;
+      itemBox.appendChild(detNotes);
+    }
   }
 }
 
