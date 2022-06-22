@@ -1,7 +1,32 @@
 import {myItems} from './newItems.js';
 export var currentProject = 'Default';
+export var myProjects = [];
 import {Items} from './newItems.js';
 import {createItem} from './newItems.js';
+
+// Function that checks localStorage for projects and loads them
+function checkStorageProj() {
+  var storageProjs = localStorage.getItem('myProjects');
+  if (storageProjs) {
+     var projArray = storageProjs.split(',');
+     if (!(projArray.includes('Default'))) {
+       projArray.unshift('Default');
+     }
+     console.log(projArray);
+
+     for (var i = 0; i < projArray.length; i++) {
+      addProjToStorage(projArray[i]);
+      postProject(projArray[i]);
+     }
+  } else {
+    addProjToStorage('Default');
+    postProject('Default');
+  }
+
+}
+
+
+
 
 // Function loads html structure and containers for project, items, and details
 export function pageLoad() {
@@ -24,22 +49,6 @@ export function pageLoad() {
   projHeader.innerHTML = 'Projects';
   projContainer.appendChild(projHeader);
 
-  var projDefault = document.createElement('div');
-  projDefault.innerHTML = 'Default';
-  projDefault.setAttribute('id', 'projDefault');
-  projDefault.setAttribute('class', 'projects');
-  projDefault.style.fontWeight = 'bold';
-  projContainer.appendChild(projDefault);
-
-  projDefault.onclick = function() {
-    currentProject = this.innerHTML;
-    postItems();
-    var projects = document.querySelectorAll('.projects');
-    projects.forEach(item => {
-      item.style.fontWeight = 'normal';
-    });
-    projDefault.style.fontWeight = 'bold';
-  }
 
 
   var projButton = document.createElement('button');
@@ -79,6 +88,8 @@ export function pageLoad() {
 
 
   content.appendChild(app);
+
+  checkStorageProj();
 };
 
 
@@ -108,12 +119,23 @@ function addProject() {
   projContainer.insertBefore(projForm, projButton);
 
 
-  submitProj.onclick = function() {
+  submitProj.onclick = postProject;
+
+};
+
+// Function that adds entered project to DOM when button clicked
+function postProject(project) {
+  if (typeof(project) !== 'string') {
     var newProjectInput = document.getElementById('projInput').value;
     var newProj = document.createElement('div');
     newProj.setAttribute('class', 'projects');
     newProj.innerHTML = newProjectInput;
+    var projContainer = document.getElementById('projContainer');
+    var projButton = document.getElementById('projButton');
     projContainer.insertBefore(newProj, projButton);
+
+    newProj.style.fontWeight = 'bold';
+    currentProject = newProj.innerHTML;
 
     newProj.onclick = function() {
       currentProject = this.innerHTML;
@@ -128,12 +150,38 @@ function addProject() {
 
     }
 
-
+    addProjToStorage(newProjectInput);
     hideProjForm();
-  };
+  } else {
 
-};
+    var newProj = document.createElement('div');
+    newProj.setAttribute('class', 'projects');
+    newProj.innerHTML = project;
+    var projContainer = document.getElementById('projContainer');
+    var projButton = document.getElementById('projButton');
+    projContainer.insertBefore(newProj, projButton);
 
+    newProj.onclick = function() {
+      currentProject = this.innerHTML;
+      postItems();
+
+      var projects = document.querySelectorAll('.projects');
+      projects.forEach(item => {
+        item.style.fontWeight = 'normal';
+      });
+
+      newProj.style.fontWeight = 'bold';
+
+    }
+  }
+}
+
+
+function addProjToStorage(project) {
+  myProjects.push(project);
+  localStorage.setItem('myProjects', myProjects);
+  console.log(localStorage.getItem('myProjects'));
+}
 
 
 
@@ -249,7 +297,6 @@ export function hideProjForm() {
 
 // Function that clears current items and posts all items
 export function postItems() {
-  console.log(myItems);
   var postedItems = document.querySelectorAll('.itemBox');
   postedItems.forEach(item => {
     item.remove();

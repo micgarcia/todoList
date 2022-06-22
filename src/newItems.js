@@ -1,6 +1,6 @@
 export var myItems = [];
 
-
+import {myProjects} from './pageLoad.js';
 import {currentProject} from './pageLoad.js';
 import {hideItemForm} from './pageLoad.js';
 import {postItems} from './pageLoad.js';
@@ -23,7 +23,6 @@ export function createItem() {
   var notes = document.getElementById('noteInput').value;
 
   var item = new Items(project, title, description, dueDate, priority, notes);
-  console.log(myItems);
   myItems.push(item);
   hideItemForm();
   postItems();
