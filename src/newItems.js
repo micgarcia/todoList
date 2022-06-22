@@ -4,6 +4,7 @@ import {myProjects} from './pageLoad.js';
 import {currentProject} from './pageLoad.js';
 import {hideItemForm} from './pageLoad.js';
 import {postItems} from './pageLoad.js';
+import {addItemToStorage} from './pageLoad.js';
 
 export function Items(project, title, description, dueDate, priority, notes) {
   this.project = project;
@@ -24,6 +25,7 @@ export function createItem() {
 
   var item = new Items(project, title, description, dueDate, priority, notes);
   myItems.push(item);
+  addItemToStorage(item);
   hideItemForm();
   postItems();
 

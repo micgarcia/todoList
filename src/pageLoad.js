@@ -12,7 +12,6 @@ function checkStorageProj() {
      if (!(projArray.includes('Default'))) {
        projArray.unshift('Default');
      }
-     console.log(projArray);
 
      for (var i = 0; i < projArray.length; i++) {
       addProjToStorage(projArray[i]);
@@ -23,6 +22,21 @@ function checkStorageProj() {
     postProject('Default');
   }
 
+}
+
+function checkStorageItems() {
+  var storageItems = localStorage.getItem('myItems');
+  if (storageItems) {
+    var itemArray = storageItems.split(',');
+
+    for (var i = 0; i < itemArray.length; i++) {
+      myItems.push(itemArray[i]);
+    }
+  }
+  console.log(myItems);
+  console.log(typeof(myItems[0]));
+
+  postItems();
 }
 
 
@@ -90,6 +104,7 @@ export function pageLoad() {
   content.appendChild(app);
 
   checkStorageProj();
+  checkStorageItems();
 };
 
 
@@ -183,7 +198,10 @@ function addProjToStorage(project) {
   console.log(localStorage.getItem('myProjects'));
 }
 
-
+export function addItemToStorage(item) {
+  localStorage.setItem('myItems', myItems);
+  console.log(localStorage.getItem('myItems'));
+}
 
 // Function creates Add Item button, then creates form to enter item
 // then calls createItem when submit button clicked
