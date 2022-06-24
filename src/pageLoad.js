@@ -26,15 +26,14 @@ function checkStorageProj() {
 
 function checkStorageItems() {
   var storageItems = localStorage.getItem('myItems');
-  if (storageItems) {
-    var itemArray = storageItems.split(',');
 
-    for (var i = 0; i < itemArray.length; i++) {
-      myItems.push(itemArray[i]);
+  if (storageItems) {
+    var itemsArray = storageItems.split('\n');
+    for (var i = 0; i < itemsArray.length; i++) {
+      var parsedItem = JSON.parse(itemsArray[i]);
+      myItems.push(parsedItem);
     }
   }
-  console.log(myItems);
-  console.log(typeof(myItems[0]));
 
   postItems();
 }
@@ -105,6 +104,13 @@ export function pageLoad() {
 
   checkStorageProj();
   checkStorageItems();
+
+  var projects = document.getElementsByClassName('projects');
+  for (var i = 0; i < projects.length; i++) {
+    if (projects[i].innerHTML === 'Default') {
+      projects[i].style.fontWeight = 'bold';
+    }
+  }
 };
 
 
@@ -195,12 +201,16 @@ function postProject(project) {
 function addProjToStorage(project) {
   myProjects.push(project);
   localStorage.setItem('myProjects', myProjects);
-  console.log(localStorage.getItem('myProjects'));
 }
 
-export function addItemToStorage(item) {
-  localStorage.setItem('myItems', myItems);
-  console.log(localStorage.getItem('myItems'));
+export function addItemToStorage() {
+  var stringifiedItems = [];
+  for (var i = 0; i < myItems.length; i++) {
+    stringifiedItems.push(JSON.stringify(myItems[i]));
+  }
+  var joinedString = stringifiedItems.join('\n');
+
+  localStorage.setItem('myItems', joinedString);
 }
 
 // Function creates Add Item button, then creates form to enter item
@@ -324,6 +334,7 @@ export function postItems() {
     if (myItems[i].project === currentProject) {
       var itemBox = document.createElement('div');
       itemBox.setAttribute('class', 'itemBox');
+      itemBox.setAttribute('id', myItems[i].id);
       detContainer.appendChild(itemBox);
 
       var detProject = document.createElement('div');
@@ -355,7 +366,41 @@ export function postItems() {
       detNotes.setAttribute('class', 'detNotes');
       detNotes.innerHTML = 'Notes: ' + myItems[i].priority;
       itemBox.appendChild(detNotes);
+
+      var edItem = document.createElement('button');
+      edItem.setAttribute('class', 'edItem');
+      edItem.innerHTML = 'Edit Item';
+      itemBox.appendChild(edItem);
+
+      var delItem = document.createElement('button');
+      delItem.setAttribute('class', 'delItem');
+      delItem.innerHTML = 'Delete Item';
+      itemBox.appendChild(delItem);
+
+      delItem.onclick = deleteItem;
     }
   }
+}
+
+
+function editItem() {
+
+}
+
+function deleteItem() {
+  var itemBox = this.parentElement;
+
+  var IdToDelete = itemBox.id;
+
+
+  for (var i = 0; i < myItems.length; i++) {
+    if (myItems[i].id == IdToDelete) {
+      myItems[i].project = 'delete';
+    }
+  }
+
+  postItems();
+  addItemToStorage();
+
 }
 

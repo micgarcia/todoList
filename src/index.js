@@ -13,8 +13,7 @@ pageLoad();
 
 /*
   Next steps:
-  -Implement localStorage
-  -Implement ways to delete or edit item properties
+  -Implement ways to edit item properties
   -Add date api to date input
   -Style layout of page
 */
