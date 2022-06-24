@@ -16,7 +16,13 @@ export function Items(project, title, description, dueDate, priority, notes, id)
   this.id = id;
 };
 
-var idCounter = 0;
+if (!localStorage.getItem('idCounter')) {
+  var idCounter = 0;
+} else {
+  var idCounter = localStorage.getItem('idCounter');
+}
+
+localStorage.setItem('idCounter', idCounter);
 
 export function createItem() {
   var project = document.getElementById('projectInput').value;
@@ -26,7 +32,11 @@ export function createItem() {
   var priority = document.getElementById('priorityInput').value;
   var notes = document.getElementById('noteInput').value;
   var id = idCounter;
+
   idCounter++;
+
+  localStorage.setItem('idCounter', idCounter);
+
 
 
   var item = new Items(project, title, description, dueDate, priority, notes, id);

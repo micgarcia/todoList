@@ -45,7 +45,7 @@ function checkStorageItems() {
 export function pageLoad() {
   const content = document.getElementById('content');
 
-  var header = document.createElement('div');
+  var header = document.createElement('h1');
   header.setAttribute('id', 'header');
   header.innerHTML = 'To-Do List';
   content.appendChild(header);
@@ -148,12 +148,21 @@ function addProject() {
 function postProject(project) {
   if (typeof(project) !== 'string') {
     var newProjectInput = document.getElementById('projInput').value;
+    if (newProjectInput === '') {
+      hideProjForm();
+      return;
+    }
     var newProj = document.createElement('div');
     newProj.setAttribute('class', 'projects');
     newProj.innerHTML = newProjectInput;
     var projContainer = document.getElementById('projContainer');
     var projButton = document.getElementById('projButton');
     projContainer.insertBefore(newProj, projButton);
+
+    var projects = document.querySelectorAll('.projects');
+      projects.forEach(item => {
+        item.style.fontWeight = 'normal';
+      });
 
     newProj.style.fontWeight = 'bold';
     currentProject = newProj.innerHTML;
@@ -367,11 +376,6 @@ export function postItems() {
       detNotes.innerHTML = 'Notes: ' + myItems[i].priority;
       itemBox.appendChild(detNotes);
 
-      var edItem = document.createElement('button');
-      edItem.setAttribute('class', 'edItem');
-      edItem.innerHTML = 'Edit Item';
-      itemBox.appendChild(edItem);
-
       var delItem = document.createElement('button');
       delItem.setAttribute('class', 'delItem');
       delItem.innerHTML = 'Delete Item';
@@ -382,10 +386,6 @@ export function postItems() {
   }
 }
 
-
-function editItem() {
-
-}
 
 function deleteItem() {
   var itemBox = this.parentElement;
