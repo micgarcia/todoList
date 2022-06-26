@@ -182,6 +182,9 @@ function postProject(project) {
 
     addProjToStorage(newProjectInput);
     hideProjForm();
+
+    currentProject = newProjectInput;
+    postItems();
   } else {
 
     var newProj = document.createElement('div');
@@ -348,32 +351,32 @@ export function postItems() {
 
       var detProject = document.createElement('div');
       detProject.setAttribute('class', 'detProject');
-      detProject.innerHTML = 'Project: ' + myItems[i].project;
+      detProject.innerHTML = '<b>Project:</b> ' + myItems[i].project;
       itemBox.appendChild(detProject);
 
       var detTitle = document.createElement('div');
       detTitle.setAttribute('class', 'detTitle');
-      detTitle.innerHTML = 'Title: ' + myItems[i].title;
+      detTitle.innerHTML = '<b>Title:</b> ' + myItems[i].title;
       itemBox.appendChild(detTitle);
 
       var detDesc = document.createElement('div');
       detDesc.setAttribute('class', 'detDesc');
-      detDesc.innerHTML = 'Description: ' + myItems[i].description;
+      detDesc.innerHTML = '<b>Description:</b> ' + myItems[i].description;
       itemBox.appendChild(detDesc);
 
       var detDue = document.createElement('div');
       detDue.setAttribute('class', 'detDue');
-      detDue.innerHTML = 'Due Date: ' + myItems[i].dueDate;
+      detDue.innerHTML = '<b>Due Date:</b> ' + myItems[i].dueDate;
       itemBox.appendChild(detDue);
 
       var detPriority = document.createElement('div');
       detPriority.setAttribute('class', 'detPriority');
-      detPriority.innerHTML = 'Priority: ' + myItems[i].priority;
+      detPriority.innerHTML = '<b>Priority:</b> ' + myItems[i].priority;
       itemBox.appendChild(detPriority);
 
       var detNotes = document.createElement('div');
       detNotes.setAttribute('class', 'detNotes');
-      detNotes.innerHTML = 'Notes: ' + myItems[i].priority;
+      detNotes.innerHTML = '<b>Notes:</b> ' + myItems[i].priority;
       itemBox.appendChild(detNotes);
 
       var delItem = document.createElement('button');

@@ -7,8 +7,7 @@ html, body, div, span, applet, object, iframe,
 h1, h2, h3, h4, h5, h6, p, blockquote, pre,
 a, abbr, acronym, address, big, cite, code,
 del, dfn, em, img, ins, kbd, q, s, samp,
-small, strike, strong, sub, sup, tt, var,
-b, u, i, center,
+small, strike, sub, sup, tt, var, u, i, center,
 dl, dt, dd, ol, ul, li,
 fieldset, form, label, legend,
 table, caption, tbody, tfoot, thead, tr, th, td,
@@ -54,14 +53,26 @@ table {
   ===============
 */
 
+html {
+  height: 100%;
+
+}
+
 body {
   width: 100%;
-  height: 100vh;
+  height: 100%;
+
+
+  font-family: 'Poppins', sans-serif;
 }
 
 #content {
   width: 100%;
   height: 100%;
+}
+
+button {
+  font-family: 'Poppins', sans-serif;
 }
 
 
@@ -74,14 +85,19 @@ body {
 h1 {
   font-weight: bold;
   font-size: 42px;
-  margin: 0.5em 0 1em 0.5em;
+  padding: 0.5em 0 1em 0.5em;
+
+  background-color: #548CA8;
+  color: #EEEEEE;
 }
 
 #app {
   height: 100%;
   display: grid;
-  grid-template-columns: 1fr 4fr 1fr;
-  grid-template-rows: 1fr;
+  grid-template-columns: 1fr minmax(400px, 4fr) 1fr;
+
+  background-color: #476072;
+  color: #EEEEEE;
 }
 
 
@@ -94,12 +110,16 @@ h1 {
 */
 
 #projContainer {
+  height: 100%;
   display: grid;
   grid-template-columns: 1fr;
   grid-template-rows: repeat(auto-fit, 50px);
 
   justify-items: center;
   align-items: center;
+
+  background-color: #476072;
+
 }
 
 #projHeader {
@@ -111,8 +131,55 @@ h1 {
   font-size: 18px;
 }
 
+.projects:hover {
+  cursor: pointer;
+  color: #548CA8;
+}
+
 #projForm {
   text-align: center;
+  padding-top: 3em;
+}
+
+#projInput {
+  background-color: #EEEEEE;
+  border-style: none;
+  border-radius: 4px;
+  padding: 0.5em 0.25em 0.5em 0.25em;
+}
+
+#projButton {
+  font-weight: 600;
+  padding: 0.5em 0.75em 0.5em 0.75em;
+  border-radius: 5px;
+  border-style: none;
+  margin-top: 5em;
+
+  background-color: #548CA8;
+  color: #EEEEEE;
+}
+
+#projButton:hover {
+  background-color: #334257;
+  color: #EEEEEE;
+  cursor: pointer;
+}
+
+#submitProj {
+  font-weight: 600;
+  padding: 0.5em 0.75em 0.5em 0.75em;
+  border-radius: 5px;
+  border-style: none;
+  margin: 1em 0 1em 0;
+
+  background-color: #548CA8;
+  color: #EEEEEE;
+}
+
+#submitProj:hover {
+  background-color: #334257;
+  color: #EEEEEE;
+  cursor: pointer;
 }
 
 
@@ -124,34 +191,61 @@ h1 {
 */
 
 #detContainer {
+  height: 100%;
+
   grid-column: 2 / 3;
   grid-row: 1 / 2;
+  row-gap: 4em;
 
   display: grid;
   grid-template-columns: 1fr;
-  grid-template-rows: 50px repeat(auto-fit, 200px);
+  grid-template-rows: repeat(auto-fit, 1fr);
 
   justify-items: start;
   align-items: center;
+
+  background-color: #334257;
 }
 
 #detHeader {
   justify-self: center;
   font-weight: bold;
   font-size: 26px;
+  padding-top: 0.5em;
 }
 
 .itemBox {
-  padding-left: 1em;
+  height: 100%;
+  width: 90%;
+  margin-left: 5%;
+
+  border-radius: 5px;
+  background-color: #548CA8;
 }
 
 .itemBox div[class^="det"] {
   font-size: 17px;
-  padding-top: 0.5em;
+  padding-top: 0.75em;
+  padding-left: 1em;
 }
 
 .delItem {
-  margin-top: 0.5em;
+  font-weight: 600;
+  padding: 0.5em 0.75em 0.5em 0.75em;
+  border-radius: 5px;
+  border-style: none;
+  margin-top: 1.5em;
+  margin-left: 1em;
+  margin-bottom: 1em;
+
+  background-color: #476072;
+  color: #EEEEEE;
+}
+
+.delItem:hover {
+  background-color: #EEEEEE;
+  color: #334257;
+  cursor: pointer;
 }
 
 
@@ -171,6 +265,7 @@ h1 {
   justify-items: center;
   align-items: center;
 
+  background-color: #476072;
 }
 
 #itemHeader {
@@ -180,15 +275,56 @@ h1 {
 
 #itemForm {
   padding-right: 1em;
+  padding-left: 0.5em;
   grid-row: 3 / 4;
   display: grid;
+  margin-top: 10em;
 }
 
 #itemForm input {
-  margin-bottom: 0.5em;
+  margin-bottom: 1em;
+  margin-top: 0.25em;
+  padding: 0.4em;
+  border-style: none;
+  border-radius: 4px;
+
+  background-color: #EEEEEE;
 }
 
 #itemButton {
   grid-row: 2 / 3;
+
+  font-weight: 600;
+  padding: 0.5em 0.75em 0.5em 0.75em;
+  border-radius: 5px;
+  border-style: none;
+  margin-top: 1em;
+
+
+  background-color: #548CA8;
+  color: #EEEEEE;
+}
+
+#itemButton:hover {
+  background-color: #334257;
+  color: #EEEEEE;
+  cursor: pointer;
+}
+
+#submitItemForm {
+  font-weight: 600;
+  padding: 0.5em 0.75em 0.5em 0.75em;
+  border-radius: 5px;
+  border-style: none;
+  margin-top: 1em;
+
+  background-color: #548CA8;
+  color: #EEEEEE;
+}
+
+#submitItemForm:hover {
+  background-color: #334257;
+  color: #EEEEEE;
+  cursor: pointer;
 }
 
